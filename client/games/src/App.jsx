@@ -1,29 +1,22 @@
-import React from 'react';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+// import ChatPage from './components/ChatPage';
 import { Chat } from './pages/Chat';
 import { Errors } from './pages/Errors';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import socketIO from 'socket.io-client';
 
-
-
+const socket = socketIO.connect('http://localhost:4000');
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <div>
-        <nav>
-          The Socket Test
-        </nav>
+        <Routes>
+          <Route path="/" element={<Home socket={socket} />}></Route>
+          <Route path="/chat" element={<Chat socket={socket} />}></Route>
+          <Route path="/error" element={<Errors />}></Route>
+        </Routes>
       </div>
-
-      <Routes>
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/error" element={<div><Errors/></div>} />
-      </Routes>
-      <div className='button-list'>
-        <Link to="/chat"><button>Chat</button></Link>
-        <Link to="/error"><button>Errors</button></Link>
-      </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

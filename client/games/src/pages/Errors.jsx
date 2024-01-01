@@ -2,6 +2,6 @@ import React from 'react'
 
 export const Errors = () => {
   return (
-    <div>Errors</div>
+    <div> The Standard Error </div>
   )
 }
