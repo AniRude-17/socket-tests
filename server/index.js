@@ -8,7 +8,7 @@ app.use(cors());
 
 const io = require('socket.io')(http, {
     cors: {
-        origin: "http://localhost:5173"
+        origin: ["http://localhost:5173","http://10.250.3.164:5173"]
     }
 });
 
@@ -17,11 +17,15 @@ io.on('connection', (socket) => {
 
     // Listen for incoming messages
     socket.on('message', (data) => {
-        // Broadcast the message to all connected clients
         console.log(`Message Received: ${data}`);
         io.emit('message', data);
     });
 
+
+    socket.on('alert', ()=>{
+      console.log('ALERT EVERYONE');
+      io.emit('alert');
+    })
     // Handle disconnect
     socket.on('disconnect', () => {
         console.log(`DISCONNECT :(  ${socket.id} user disconnected`);

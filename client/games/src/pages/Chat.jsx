@@ -10,24 +10,37 @@ export const Chat = ({ socket }) => {
     window.location.reload();
   };
 
+  const uselessButton = () => {
+    console.log('ALERTED ALL');
+    socket.emit('alert');
+  }
+
+  const gotoGame = () =>{
+    navigate('/tic')
+  }
+
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    // Listen for incoming messages
-    socket.on('message', (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
+    const handleIncomingMessage = (incomingMessage) => {
+      setMessages((prevMessages) => [...prevMessages, incomingMessage]);
+    };
 
-    // Clean up socket on component unmount
+    const handleAlert = () => {
+      alert('Someone has alerted you!');
+    };
+
+    socket.on('alert',handleAlert);
+    socket.on('message', handleIncomingMessage);
     return () => {
-      socket.disconnect();
+      socket.off('message', handleIncomingMessage);
     };
   }, [socket]);
-
+  
   const handleSendMessage = (e) => {
     e.preventDefault();
-    console.log(message);
+  
     if (message.trim() && localStorage.getItem('userName')) {
       const newMessage = {
         text: message,
@@ -35,14 +48,18 @@ export const Chat = ({ socket }) => {
         id: `${socket.id}${Math.random()}`,
         socketID: socket.id,
       };
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-      socket.emit('message', newMessage);
+  
+      socket.emit('message', newMessage, (acknowledgment) => {
+        setMessages((prevMessages) => [...prevMessages, acknowledgment]);
+      });
     }
+  
     setMessage('');
   };
 
   return (
     <div className='chat'>
+      
       <header className="chat__mainHeader">
         <p>Hangout with Colleagues</p>
         <button className="leaveChat__btn" onClick={handleLeaveChat}>
@@ -68,7 +85,7 @@ export const Chat = ({ socket }) => {
           )
         )}
       </div>
-
+            
       <div className="chat__footer">
         <form className="form" onSubmit={handleSendMessage}>
           <input
@@ -81,6 +98,8 @@ export const Chat = ({ socket }) => {
           <button className="sendBtn">SEND</button>
         </form>
       </div>
+      <button className='temp' onClick={uselessButton}>Alert Everyone</button>
+      <button className='button' onClick={gotoGame}>Tic Tae Toe</button>
     </div>
   );
 };
