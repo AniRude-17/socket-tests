@@ -20,6 +20,11 @@ export const Tic = () => {
         console.log('ahah',index);
         console.log('boardValues',boardValues);
         var prevBoard = [...boardValues];
+        if(prevBoard[index]==='X')
+        {
+            alert("Already Taken");
+            return;
+        }
         prevBoard[index] = 'X';
         updateBoard(prevBoard);
         };
