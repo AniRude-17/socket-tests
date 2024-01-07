@@ -31,6 +31,7 @@ io.on('connection', (socket) => {
     // Handle disconnect
     socket.on('disconnect', () => {
         console.log(`DISCONNECT :(  ${socket.id} user disconnected`);
+        online-=1;
     });
 });
 
