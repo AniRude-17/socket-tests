@@ -6,6 +6,8 @@ const http = require('http').createServer(app); // Use createServer method
 const cors = require('cors');
 app.use(cors());
 
+var online=1;
+
 const io = require('socket.io')(http, {
     cors: {
         origin: ["http://localhost:5173","http://10.250.3.164:5173"]
@@ -13,8 +15,8 @@ const io = require('socket.io')(http, {
 });
 
 io.on('connection', (socket) => {
-    console.log(`yaaaaaaa CONNECTED : ${socket.id} user just connected!`);
-
+    console.log(`yaaaaaaa CONNECTED : ${socket.id} user just connected, total ${online}`);
+    online+=1;
     // Listen for incoming messages
     socket.on('message', (data) => {
         console.log(`Message Received: ${data}`);

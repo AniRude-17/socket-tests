@@ -1,0 +1,8 @@
+.tic-small-sq{
+    height:50px;
+    width:50px;
+    background-color: cadetblue;
+}
+.tic-small-sq:hover{
+    background-color: bisque;
+}
