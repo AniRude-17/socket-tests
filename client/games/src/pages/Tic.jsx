@@ -1,11 +1,9 @@
 import { Button } from 'bootstrap'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 
-
-
-export const Tic = () => {
+export const Tic = ({socket}) => {
 
     const [boardValues,updateBoard] = useState([" "," "," "," "," "," "," "," "," "]);
     const Square = ({value,onSqClick}) => {
@@ -14,19 +12,31 @@ export const Tic = () => {
         )
     };
 
-
+    useEffect(() => {
+        const boardUpdate = (board) => {
+          updateBoard([...board]);
+        };
+      
+        socket.on('tic3x3', boardUpdate);
+    
+        return () => {
+          socket.off('tic3x3', boardUpdate);
+        };
+      }, [socket]);
+      
     const Clicks = (index) => {
         return () => {
         console.log('ahah',index);
         console.log('boardValues',boardValues);
         var prevBoard = [...boardValues];
-        if(prevBoard[index]==='X')
+        if(prevBoard[index]!=' ')
         {
             alert("Already Taken");
             return;
         }
         prevBoard[index] = 'X';
         updateBoard(prevBoard);
+        socket.emit('tic3x3', prevBoard);
         };
     };
 

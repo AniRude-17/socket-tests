@@ -6,7 +6,10 @@ const http = require('http').createServer(app); // Use createServer method
 const cors = require('cors');
 app.use(cors());
 
-var online=1;
+var online=0;
+
+const rooms=[];
+
 
 const io = require('socket.io')(http, {
     cors: {
@@ -15,9 +18,11 @@ const io = require('socket.io')(http, {
 });
 
 io.on('connection', (socket) => {
-    console.log(`yaaaaaaa CONNECTED : ${socket.id} user just connected, total ${online}`);
     online+=1;
+    console.log(`yaaaaaaa CONNECTED : ${socket.id} user just connected, total ${online}`);
+    
     // Listen for incoming messages
+
     socket.on('message', (data) => {
         console.log(`Message Received: ${data}`);
         io.emit('message', data);
@@ -28,7 +33,13 @@ io.on('connection', (socket) => {
       console.log('ALERT EVERYONE');
       io.emit('alert');
     })
-    // Handle disconnect
+
+    socket.on('tic3x3',(board)=>{
+      console.log("Board Update Sent",board);
+      io.emit('tic3x3',board);
+    });
+
+    
     socket.on('disconnect', () => {
         console.log(`DISCONNECT :(  ${socket.id} user disconnected`);
         online-=1;
