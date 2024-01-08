@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react'
 
 
 export const Tic = ({socket}) => {
-
+    const [lastMove,updateLastMove] = useState('O');
     const [boardValues,updateBoard] = useState([" "," "," "," "," "," "," "," "," "]);
+    const [onlineUsers,updateOnlineUsers] = useState([0]);
+
     const Square = ({value,onSqClick}) => {
         return (
             <button className='tic-small-sq' onClick={onSqClick}>{value}</button>
@@ -16,9 +18,14 @@ export const Tic = ({socket}) => {
         const boardUpdate = (board) => {
           updateBoard([...board]);
         };
+
+        const updateOnline = (online) => {
+            console.log('online',online);
+            updateOnlineUsers(online);
+        }
       
         socket.on('tic3x3', boardUpdate);
-    
+        socket.on('online',updateOnline);
         return () => {
           socket.off('tic3x3', boardUpdate);
         };
@@ -29,12 +36,23 @@ export const Tic = ({socket}) => {
         console.log('ahah',index);
         console.log('boardValues',boardValues);
         var prevBoard = [...boardValues];
+
         if(prevBoard[index]!=' ')
         {
             alert("Already Taken");
             return;
         }
-        prevBoard[index] = 'X';
+
+        if(lastMove==='O') {
+            prevBoard[index] = 'X';
+            updateLastMove('X');
+            console.log('lastMove',lastMove,"why");
+        }
+        else {
+            prevBoard[index] = 'O';
+            updateLastMove('O');
+        }
+
         updateBoard(prevBoard);
         socket.emit('tic3x3', prevBoard);
         };
@@ -43,6 +61,7 @@ export const Tic = ({socket}) => {
     return (
         <div className='TicTaeToe3x3'>
             <h1>Tic Tae Toe</h1>
+            <h2> Online Currently : { onlineUsers }</h2>
             <div className='game'>
                 <div className='current-player'>
                     Player ABC
