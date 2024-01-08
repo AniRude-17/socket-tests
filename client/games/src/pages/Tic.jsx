@@ -55,7 +55,49 @@ export const Tic = ({socket}) => {
 
         updateBoard(prevBoard);
         socket.emit('tic3x3', prevBoard);
+        if(checkWinner())
+        {
+            if(checkWinner()==='draw')
+            {
+                alert('Draw');
+            }
+            else
+            {
+                alert(checkWinner()+' Won');
+            }
+            updateBoard([" "," "," "," "," "," "," "," "," "]);
+            socket.emit('tic3x3', [" "," "," "," "," "," "," "," "," "]);
         };
+    }
+
+    };
+
+    // PLEASE CHANGE THIS
+    // SOO BAD SOO BAD
+    // PLEASE CHANGE THIS
+
+    const checkWinner = () => {
+        if (boardValues[0] === boardValues[1] && boardValues[1] === boardValues[2] && boardValues[0] !== ' ') {
+            return boardValues[0];
+        } else if (boardValues[3] === boardValues[4] && boardValues[4] === boardValues[5] && boardValues[3] !== ' ') {
+            return boardValues[3];
+        } else if (boardValues[6] === boardValues[7] && boardValues[7] === boardValues[8] && boardValues[6] !== ' ') {
+            return boardValues[6];
+        } else if (boardValues[0] === boardValues[3] && boardValues[3] === boardValues[6] && boardValues[0] !== ' ') {
+            return boardValues[0];
+        } else if (boardValues[1] === boardValues[4] && boardValues[4] === boardValues[7] && boardValues[1] !== ' ') {
+            return boardValues[1];
+        } else if (boardValues[2] === boardValues[5] && boardValues[5] === boardValues[8] && boardValues[2] !== ' ') {
+            return boardValues[2];
+        } else if (boardValues[0] === boardValues[4] && boardValues[4] === boardValues[8] && boardValues[0] !== ' ') {
+            return boardValues[0];
+        } else if (boardValues[2] === boardValues[4] && boardValues[4] === boardValues[6] && boardValues[2] !== ' ') {
+            return boardValues[2];
+        } else if (boardValues[0] !== ' ' && boardValues[1] !== ' ' && boardValues[2] !== ' ' && boardValues[3] !== ' ' && boardValues[4] !== ' ' && boardValues[5] !== ' ' && boardValues[6] !== ' ' && boardValues[7] !== ' ' && boardValues[8] !== ' ') {
+            return 'draw';
+        } else {
+            return null;
+        }
     };
 
     return (
