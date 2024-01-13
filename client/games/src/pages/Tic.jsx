@@ -36,7 +36,21 @@ export const Tic = ({socket}) => {
         console.log('ahah',index);
         console.log('boardValues',boardValues);
         var prevBoard = [...boardValues];
-
+        
+        if(checkWinner())
+        {
+            if(checkWinner()==='draw')
+            {
+                alert('Draw');
+            }
+            else
+            {
+                alert(checkWinner()+' Won');
+            }
+            updateBoard([" "," "," "," "," "," "," "," "," "]);
+            socket.emit('tic3x3', [" "," "," "," "," "," "," "," "," "]);
+        };
+        
         if(prevBoard[index]!=' ')
         {
             alert("Already Taken");
@@ -55,19 +69,6 @@ export const Tic = ({socket}) => {
 
         updateBoard(prevBoard);
         socket.emit('tic3x3', prevBoard);
-        if(checkWinner())
-        {
-            if(checkWinner()==='draw')
-            {
-                alert('Draw');
-            }
-            else
-            {
-                alert(checkWinner()+' Won');
-            }
-            updateBoard([" "," "," "," "," "," "," "," "," "]);
-            socket.emit('tic3x3', [" "," "," "," "," "," "," "," "," "]);
-        };
     }
 
     };

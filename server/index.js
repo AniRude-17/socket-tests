@@ -16,7 +16,7 @@ const rooms=[];
 
 const io = require('socket.io')(http, {
     cors: {
-        origin: ["http://localhost:5173","http://10.250.3.164:5173"]
+        origin: ["http://localhost:5173","http://10.250.3.164:5173","http://10.212.12.164:5173/"]
     }
 });
 
@@ -57,6 +57,7 @@ app.get('/api', (req, res) => {
     message: 'Hello world',
   });
 });
+
 
 http.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
