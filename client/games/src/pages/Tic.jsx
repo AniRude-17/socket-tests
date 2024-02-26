@@ -1,6 +1,6 @@
 import { Button } from 'bootstrap'
 import React, { useEffect, useState } from 'react'
-
+import { Chat } from './Chat';
 
 
 export const Tic = ({socket}) => {

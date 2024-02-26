@@ -6,3 +6,104 @@
 .tic-small-sq:hover{
     background-color: bisque;
 }
+
+
+
+.chat {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #7e6b6b;
+  }
+  
+  .chat__mainHeader {
+    display: flex;
+    font-size: x-large;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .leaveChat__btn {
+    background-color: #d14836; /* You can choose a color of your preference */
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .message__container {
+    display: flex;
+    flex-direction: column;
+    word-wrap:break-word;
+  }
+  
+  .message__chats {
+    margin-bottom: 10px;
+  }
+  
+  .sender__name {
+    font-weight: bold;
+    color: #0c0c0c;
+    margin-bottom: 5px;
+  }
+  
+  .message__content {
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .message__sender {
+    background-color: #e0e0e0;
+    align-self: flex-end;
+    background-color: chartreuse;
+    border-radius: 10px;
+  }
+  
+  .message__recipient {
+    background-color: chartreuse;
+    align-self: flex-start;
+    border-radius: 10px;
+  }
+  
+
+  .message__recipient {
+    color: #363131;
+  }
+  
+.form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+  .message__input{
+    width: 80%;
+    height: 30px;
+    border: 1px solid;
+    background-color: rgb(174, 182, 166);
+  }
+
+
+
+}
+.sendBtn{
+  width: 15%;
+  height: 30px;
+  background-color: #d14836;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sendBtn:hover{
+  background-color: #ac766f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
